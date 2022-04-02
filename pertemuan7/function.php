@@ -13,6 +13,17 @@
             echo "Connect Successfully. Host info: " . mysqli_get_host_info($conn);
         }
     }
+    function query_check(){
+        global $conn;
+        if(mysqli_affected_rows($conn)>0){
+            echo "query berhasil!" ;
+        }
+        else{
+            echo "query gagal!" ;
+            echo "<br>" ;
+            echo mysqli_error($conn) ;
+        }
+    }
     // $query = "SELECT * FROM mahasiswa;";
     //$result = mysqli_query($conn, $query);
     //$fetch = mysqli_fetch_assoc($result);
@@ -27,5 +38,4 @@
         }
         return $data;
     }
-    
 ?>
