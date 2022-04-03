@@ -59,7 +59,7 @@ $thedata = query("SELECT * FROM mahasiswa;");
             <td><img src="../img/<?= $fetch["gambar"]; ?>" alt="img source not found"></td>
             <td>
                 <a href="admin.php">edit</a>
-                <a href="admin.php">hapus</a>
+                <a href="delete.php?id=<?= $fetch["id"]; ?>" onclick="return confirm('Yakin hapus?') ">hapus</a>
             </td>
         </tbody>
         <?php $i++; ?>

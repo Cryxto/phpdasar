@@ -15,14 +15,22 @@
     }
     function query_check(){
         global $conn;
-        if(mysqli_affected_rows($conn)>0){
-            echo "query berhasil!" ;
+        $check=mysqli_affected_rows($conn);
+        if($check>0){
+            echo "<script>alert('Data berhasil diproses!');
+            document.location.href='admin.php';
+            </script>" ;
         }
         else{
-            echo "query gagal!" ;
+            // echo "query gagal!" ;
+            $fail=  mysqli_error($conn) ;
             echo "<br>" ;
-            echo mysqli_error($conn) ;
+            echo "<script>alert('Data gagal diproses! $fail');
+            document.location.href='admin.php';
+            </script>" ;
+            // echo "<script>alert(`mysqli_error($conn) ;`);</script>" ;
         }
+        return $check;
     }
     // $query = "SELECT * FROM mahasiswa;";
     //$result = mysqli_query($conn, $query);
@@ -37,5 +45,22 @@
             $data[]=$fetch;
         }
         return $data;
+    }
+    function insertdata($data){
+        $nim = htmlspecialchars($data["nim"]);
+        $nama = htmlspecialchars($data["nama"]);
+        $jurusan =htmlspecialchars($data["jurusan"]);
+        $gambar = htmlspecialchars($data["gambar"]);
+        $query = "
+        INSERT INTO mahasiswa (nim,nama,jurusan,gambar) 
+        VALUES ('$nim','$nama', '$jurusan', '$gambar');
+        ";
+        query($query);
+        query_check();
+    }
+    function deletedata($data){
+        global $conn;
+        mysqli_query($conn,"DELETE FROM mahasiswa WHERE id=$data");
+        query_check();
     }
 ?>

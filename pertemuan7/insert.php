@@ -1,16 +1,7 @@
 <?php
 require 'function.php';
     if (isset($_POST["submit"])) {
-        $nim = $_POST["nim"];
-        $nama = $_POST["nama"];
-        $jurusan = $_POST["jurusan"];
-        $gambar = $_POST["gambar"];
-        $query = "
-        INSERT INTO mahasiswa (nim,nama,jurusan,gambar) 
-        VALUES ('$nim','$nama', '$jurusan', '$gambar');
-        ";
-        query($query);
-        query_check();
+       insertdata($_POST);
     }
 ?>
 <!DOCTYPE html>
@@ -44,15 +35,15 @@ require 'function.php';
         <ul>
             <li>
                <label for="nim">NIM</label>
-               <input type="text" name="nim" id="nim" placeholder="enter nim">
+               <input type="text" name="nim" id="nim" placeholder="enter nim" required>
             </li>
             <li>
                <label for="nama">Nama</label>
-               <input type="text" name="nama" id="nama" placeholder="enter nama">
+               <input type="text" name="nama" id="nama" placeholder="enter nama" required>
             </li>
             <li>
                <label for="jurusan">Jurusan</label>
-               <input type="text" name="jurusan" id="jurusan" placeholder="enter jurusan">
+               <input type="text" name="jurusan" id="jurusan" placeholder="enter jurusan" required>
             </li>
             <li>
                <label for="gambar">Gambar</label>
