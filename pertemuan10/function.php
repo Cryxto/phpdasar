@@ -71,8 +71,10 @@
         $fileeror = $_FILES['gambar']['error'];
         $filetmpname = $_FILES['gambar']['tmp_name'];
         $allowedextension = ["jpg","jpeg","png"];
-        $imgextension =explode('.',$filename);
-        $imgextension =strtolower(end($imgextension));
+        // $imgextension =explode('.',$filename);
+        // $imgextension =strtolower(end($imgextension)); 
+        //cara diatas cara pak Sandika
+        $imgextension =pathinfo($filename, PATHINFO_EXTENSION);
         // var_dump($_FILES['gambar']);
         // return false;
         if ($fileeror!==0&&$fileeror!==4){
@@ -104,7 +106,15 @@
         $nim = htmlspecialchars($data["nim"]);
         $nama = htmlspecialchars($data["nama"]);
         $jurusan =htmlspecialchars($data["jurusan"]);
-        $gambar = htmlspecialchars($data["gambar"]);
+        $gambarlama = htmlspecialchars($data["gambarlama"]);
+
+        if ($_FILES["gambar"]["error"]===4){
+            $gambar = $gambarlama;
+        }
+        else{
+            $gambar = upload($nama);
+        }
+
         $query = "
         UPDATE mahasiswa SET
         nim='$nim',

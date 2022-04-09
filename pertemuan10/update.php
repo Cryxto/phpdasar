@@ -2,8 +2,8 @@
 require 'function.php';
 $id = $_GET["id"];
 $mhs = query("SELECT * FROM mahasiswa WHERE id=$id;")[0];
-echo $mhs;
-var_dump($mhs);
+// echo $mhs;
+// var_dump($mhs);
     if (isset($_POST["submit"])) {
        updatedata($_POST);
     }
@@ -35,9 +35,10 @@ var_dump($mhs);
 </head>
 <body>
     <h1>Halaman Tambah Data</h1>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         <ul>
             <input type="hidden" name="id" value="<?= $mhs['id']; ?>" >
+            <input type="hidden" name="gambarlama" value="<?= $mhs['gambar']; ?>" >
             <li>
                <label for="nim">NIM</label>
                <input type="text" name="nim" id="nim" placeholder="enter nim" value="<?= $mhs['nim']; ?>" required>
@@ -51,8 +52,10 @@ var_dump($mhs);
                <input type="text" name="jurusan" id="jurusan" placeholder="enter jurusan" value="<?= $mhs['jurusan']; ?>" required>
             </li>
             <li>
-               <label for="gambar">Gambar</label>
-               <input type="text" name="gambar" id="gambar" placeholder="enter gambar" value="<?= $mhs['gambar']; ?>">
+                <label for="gambar">Gambar</label>
+                <img src="../img/<?= $mhs["gambar"]; ?>" alt="imgage not found" width="100">
+                <br>
+               <input type="file" name="gambar" id="gambar" placeholder="enter gambar">
             </li>
             <li>
                 <button type="submit" name="submit">Ubah</button>
