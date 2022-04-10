@@ -16,6 +16,7 @@
     function query_check(){
         global $conn;
         $check=mysqli_affected_rows($conn);
+        $fail= addslashes(mysqli_error($conn)); 
         if($check>0){
             echo "<script>alert('Data berhasil diproses!');
             document.location.href='admin.php';
@@ -23,8 +24,10 @@
         }
         else{
             // echo "query gagal!" ;
-            $fail=  mysqli_error($conn) ;
-            echo "<br>" ;
+            // echo mysqli_errno($conn) ;
+            // echo mysqli_error($conn) ;
+            // echo $fail ;
+            // echo "<br>" ;
             echo "<script>alert('Data gagal diproses! $fail');
             document.location.href='admin.php';
             </script>" ;
@@ -47,6 +50,7 @@
         return $data;
     }
     function insertdata($data){
+        global $conn;
         $nim = htmlspecialchars($data["nim"]);
         $nama = htmlspecialchars($data["nama"]);
         $jurusan =htmlspecialchars($data["jurusan"]);
@@ -62,7 +66,10 @@
         INSERT INTO mahasiswa (nim,nama,jurusan,gambar) 
         VALUES ('$nim','$nama', '$jurusan', '$gambar');
         ";
-        query($query);
+        // echo $query ;
+        // var_dump(mysqli_query($conn,$query)) ;
+        mysqli_query($conn,$query);
+        // echo mysqli_errno($conn);
         query_check();
     }
     function upload($forname){
@@ -102,6 +109,7 @@
         query_check();
     }
     function updatedata($data){
+        global $conn;
         $id = $data["id"];
         $nim = htmlspecialchars($data["nim"]);
         $nama = htmlspecialchars($data["nama"]);
@@ -123,7 +131,7 @@
         gambar='$gambar'
         WHERE id = $id;
         ";
-        query($query);
+        mysqli_query($conn,$query);
         query_check();
     }
     function searchData($data){
@@ -137,5 +145,28 @@
         
         return query($query);
         // query_check();
+    }
+    function registration($data){
+        global $conn;
+        $username = strtolower(stripslashes($data["username"]));
+        $password = mysqli_real_escape_string($conn,$data["password"]);
+        $passconfirm = mysqli_real_escape_string($conn,$data["passconfirm"]);
+        $result = mysqli_query($conn,"SELECT username FROM user WHERE username = '$username';");
+        if(mysqli_fetch_assoc($result)){
+            echo "username tidak tersedia!" ;
+            return false;
+        }
+        if($password!==$passconfirm){
+            echo "<script>alert('Konfirmasi salah!')</script>" ;
+            // query_check();
+            return false;
+        }
+        else{
+            echo "Successfully added user!" ;
+        }
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $query = "INSERT INTO user (username, password) VALUES ('$username','$password');";
+        mysqli_query($conn,$query);
+        query_check();
     }
 ?>

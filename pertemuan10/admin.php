@@ -29,6 +29,9 @@ if (isset($_POST["search"])) {
             width: 80px;
             height: 80px;
         }
+        .aatas{
+            padding-right: 5px;
+        }
     </style>
 </head>
 
@@ -36,7 +39,9 @@ if (isset($_POST["search"])) {
     <h1>ADMIN PAGE</h1>
     <p><?php db_connection_status(); ?></p>
     <p><?php //var_dump($thedata); ?></p>
-    <a href="insert.php">Tambah Data</a>
+    <a class="aatas" href="regist.php">Sign Up</a>
+    <br><br>
+    <a class="aatas" href="insert.php">Tambah Data</a>
     <br> <br>
     <form action="" method="POST">
        <label for="keysearch"></label>
